@@ -1,23 +1,29 @@
 <script setup>
 import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-
 const email = ref('');
 const password = ref('');
+const username = ref('');
 const checked = ref(false);
 const store = useStore();
+const router = useRouter();
 
 const signIn = async () => {
     console.log('sign in');
     try {
-        // const credentials = {
-        //     email: email.value,
-        //     password: password.value,
-        // };
+        const credentials = {
+            email: 'aws@server.com',
+            password: 'aws123',
+            username: 'aws@server.com'
+        };
 
-        await store.dispatch('auth/login', 'credentials'); // Dispatch action from auth module
-        console.log('User signed in');
+        let response = await store.dispatch('auth/login', credentials); // Dispatch action from auth module
+        if (response) {
+            router.push('/');
+        }
+        console.log('User signed in', response);
         // Optionally, redirect after successful login
     } catch (error) {
         console.log('Sign-in failed:', error);
@@ -54,8 +60,11 @@ const signIn = async () => {
                     </div>
 
                     <div>
+                        <label for="username" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Username</label>
+                        <InputText id="username" type="text" placeholder="User name" class="w-full md:w-[30rem] mb-8" v-model="email" />
+
                         <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
-                        <InputText id="email1" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" v-model="email" />
+                        <InputText id="email1" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" v-model="username" />
 
                         <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Password</label>
                         <Password id="password1" v-model="password" placeholder="Password" :toggleMask="true" class="mb-4" fluid :feedback="false"></Password>

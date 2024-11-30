@@ -1,3 +1,4 @@
+import axios from 'axios';
 const state = {
     user: null,
     token: localStorage.getItem('authToken') || null // Persist token if available
@@ -26,25 +27,24 @@ const mutations = {
 const actions = {
     login: async ({ commit }, credentials) => {
         console.log('dkjhghsjaklnjbhvgfdgfhjk');
-        commit('setToken', `hdh-${credentials}`);
-        commit('setUser', `hdh-${credentials}`);
-        // try {
-        //     const response = await fetch('https://your-api.com/auth/login', {
-        //         method: 'POST',
-        //         body: JSON.stringify(credentials),
-        //         headers: { 'Content-Type': 'application/json' }
-        //     });
-        //     const data = await response.json();
 
-        //     if (data.token) {
-        //         commit('setToken', data.token);
-        //         commit('setUser', data.user);
-        //     }
-        //     return data;
-        // } catch (error) {
-        //     console.error('Login failed:', error);
-        //     throw new Error('Failed to authenticate');
-        // }
+        try {
+            const { data } = await axios.post('https://dreams-backend-1e16.onrender.com/api/auth/login', credentials, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            // const data = await response.json();
+
+            if (data.token) {
+                commit('setToken', data.token);
+                commit('setUser', data.user);
+            }
+            return data;
+        } catch (error) {
+            console.error('Login failed:', error);
+            throw new Error('Failed to authenticate');
+        }
     },
     logout: ({ commit }) => {
         commit('clearAuth');
