@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import store from './store'; // Import the Vuex store
 
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
@@ -13,6 +14,7 @@ import '@/assets/tailwind.css';
 const app = createApp(App);
 
 app.use(router);
+app.use(store); // Register the store
 app.use(PrimeVue, {
     theme: {
         preset: Aura,

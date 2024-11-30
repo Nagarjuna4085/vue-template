@@ -102,7 +102,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
 
 <template>
     <div class="grid grid-cols-12 gap-8">
-        <div class="col-span-12 lg:col-span-6 xl:col-span-3">
+        <!-- <div class="col-span-12 lg:col-span-6 xl:col-span-3">
             <div class="card mb-0">
                 <div class="flex justify-between mb-4">
                     <div>
@@ -161,7 +161,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
                 <span class="text-primary font-medium">85 </span>
                 <span class="text-muted-color">responded</span>
             </div>
-        </div>
+        </div> -->
 
         <div class="col-span-12 xl:col-span-6">
             <div class="card">
@@ -185,7 +185,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
                     </Column>
                 </DataTable>
             </div>
-            <div class="card">
+            <!-- <div class="card">
                 <div class="flex justify-between items-center mb-6">
                     <div class="font-semibold text-xl">Best Selling Products</div>
                     <div>
@@ -267,14 +267,14 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
         <div class="col-span-12 xl:col-span-6">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Revenue Stream</div>
                 <Chart type="bar" :data="chartData" :options="chartOptions" class="h-80" />
             </div>
-            <div class="card">
+            <!-- <div class="card">
                 <div class="flex items-center justify-between mb-6">
                     <div class="font-semibold text-xl">Notifications</div>
                     <div>
@@ -338,7 +338,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
                         <span class="text-surface-900 dark:text-surface-0 leading-normal"><span class="text-primary font-bold">12</span> users have added your products to their wishlist.</span>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

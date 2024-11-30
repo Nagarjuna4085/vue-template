@@ -58,7 +58,7 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                 <i class="pi pi-ellipsis-v"></i>
             </button>
 
-            <div class="layout-topbar-menu hidden lg:block">
+            <!-- <div class="layout-topbar-menu hidden lg:block">
                 <div class="layout-topbar-menu-content">
                     <button type="button" class="layout-topbar-action">
                         <i class="pi pi-calendar"></i>
@@ -73,7 +73,7 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                         <span>Profile</span>
                     </button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
