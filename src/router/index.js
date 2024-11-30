@@ -7,6 +7,7 @@ const router = createRouter({
         {
             path: '/',
             component: AppLayout,
+            meta: { requiresAuth: true }, // Only for authenticated users
             children: [
                 {
                     path: '/',
@@ -48,7 +49,6 @@ const router = createRouter({
                     name: 'panel',
                     component: () => import('@/views/uikit/PanelsDoc.vue')
                 },
-
                 {
                     path: '/uikit/overlay',
                     name: 'overlay',
@@ -116,7 +116,6 @@ const router = createRouter({
             name: 'notfound',
             component: () => import('@/views/pages/NotFound.vue')
         },
-
         {
             path: '/auth/login',
             name: 'login',
@@ -133,6 +132,24 @@ const router = createRouter({
             component: () => import('@/views/pages/auth/Error.vue')
         }
     ]
+});
+
+// Add a global navigation guard
+router.beforeEach((to, from, next) => {
+    // Check if the user is signed in (example logic: token in localStorage)
+    const isAuthenticated = !!localStorage.getItem('authToken'); // Replace with real logic (e.g., Vuex/Pinia)
+
+    // Check if the route requires authentication
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        // Redirect unauthenticated users to the login page
+        next('/auth/login');
+    } else if (to.name === 'login' && isAuthenticated) {
+        // If already logged in, redirect from login page to dashboard
+        next('/');
+    } else {
+        // Proceed to the route
+        next();
+    }
 });
 
 export default router;
