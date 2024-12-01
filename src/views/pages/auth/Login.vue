@@ -1,14 +1,21 @@
 <script setup>
 import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
-import { ref } from 'vue';
+import axios from 'axios';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { useAuthStore } from '../../../store/auth.js'; // Import the store
+const authStore = useAuthStore();
+
 const email = ref('');
 const password = ref('');
 const username = ref('');
 const checked = ref(false);
-const store = useStore();
 const router = useRouter();
+const isAuthenticated = computed(() => authStore.isAuthenticated);
+const user = computed(() => authStore.getUser);
+const age = computed(() => authStore.getAge);
+console.log('age', age.value);
+console.log(isAuthenticated.value, user.value);
 
 const signIn = async () => {
     console.log('sign in');
@@ -18,12 +25,19 @@ const signIn = async () => {
             password: 'aws123',
             username: 'aws@server.com'
         };
+        const { data } = await axios.post('https://dreams-backend-1e16.onrender.com/api/auth/login', credentials, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        // const data = await response.json();
 
-        let response = await store.dispatch('auth/login', credentials); // Dispatch action from auth module
-        if (response) {
+        if (data.token && data.usererrrrrrrrr) {
+            authStore.login(data.token, data.usererrrrrrrrr); // Trigger logout action
             router.push('/');
         }
-        console.log('User signed in', response);
+
+        console.log('User signed in', data);
         // Optionally, redirect after successful login
     } catch (error) {
         console.log('Sign-in failed:', error);

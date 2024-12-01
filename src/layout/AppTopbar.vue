@@ -1,8 +1,26 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
+import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../store/auth';
 import AppConfigurator from './AppConfigurator.vue';
-
 const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
+const authStore = useAuthStore();
+const user = computed(() => authStore.getUser);
+const router = useRouter();
+const op = ref();
+// const members = ref([{ name: user.value.username, image: 'amyelsner.png', email: user.value.username, role: 'Owner' }]);
+
+const toggle = (event) => {
+    op.value.toggle(event);
+};
+
+const Logout = () => {
+    authStore.logout();
+    router.push('/auth/login');
+};
+
+import Popover from 'primevue/popover';
 </script>
 
 <template>
@@ -58,22 +76,49 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                 <i class="pi pi-ellipsis-v"></i>
             </button>
 
-            <!-- <div class="layout-topbar-menu hidden lg:block">
+            <div class="layout-topbar-menu hidden lg:block">
                 <div class="layout-topbar-menu-content">
-                    <button type="button" class="layout-topbar-action">
+                    <!-- <button type="button" class="layout-topbar-action">
                         <i class="pi pi-calendar"></i>
                         <span>Calendar</span>
                     </button>
                     <button type="button" class="layout-topbar-action">
                         <i class="pi pi-inbox"></i>
                         <span>Messages</span>
-                    </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profile</span>
-                    </button>
+                    </button> -->
+                    <div class="justify-center">
+                        <Popover ref="op">
+                            <div class="flex flex-col gap-4 w-[25rem]">
+                                <div>
+                                    <span class="font-medium block mb-2">Profile</span>
+                                    <ul class="list-none p-0 m-0 flex flex-col gap-4">
+                                        <li class="flex items-center gap-2">
+                                            <img :src="`https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png`" style="width: 32px" />
+                                            <div>
+                                                <span class="font-medium">{{ user?.email }}</span>
+                                                <div class="text-sm text-surface-500 dark:text-surface-400">{{ user?.username }}</div>
+                                            </div>
+                                            <div class="flex items-center gap-2 text-surface-500 dark:text-surface-400 ml-auto text-sm">
+                                                <!-- <span>owner</span>
+                                                <i class="pi pi-angle-down"></i> -->
+                                                <Button type="button" outlined severity="danger" @click="Logout()">
+                                                    <img alt="logo" src="/demo/images/logo.svg" style="width: 1.5rem" />
+                                                    <span class="ml-2 text-bold">Logout</span>
+                                                </Button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </Popover>
+                        <button @click="toggle" type="button" class="layout-topbar-action">
+                            <i class="pi pi-user"></i>
+                            <span>Profile</span>
+                        </button>
+                        <!-- <Button type="button" icon="pi pi-share-alt" label="Share" @click="toggle" /> -->
+                    </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>

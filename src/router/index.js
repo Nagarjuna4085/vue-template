@@ -1,5 +1,6 @@
 import AppLayout from '@/layout/AppLayout.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '../store/auth'; // Import the store
 
 const router = createRouter({
     history: createWebHistory(),
@@ -141,14 +142,16 @@ const router = createRouter({
 
 // Add a global navigation guard
 router.beforeEach((to, from, next) => {
+    const store = useAuthStore();
+
     // Check if the user is signed in (example logic: token in localStorage)
-    const isAuthenticated = !!localStorage.getItem('authToken'); // Replace with real logic (e.g., Vuex/Pinia)
+    // const isAuthenticated = !!localStorage.getItem('authToken'); // Replace with real logic (e.g., Vuex/Pinia)
 
     // Check if the route requires authentication
-    if (to.meta.requiresAuth && !isAuthenticated) {
+    if (to.meta.requiresAuth && !store.isAuthenticated) {
         // Redirect unauthenticated users to the login page
         next('/auth/login');
-    } else if (to.name === 'login' && isAuthenticated) {
+    } else if (to.name === 'login' && store.isAuthenticated) {
         // If already logged in, redirect from login page to dashboard
         next('/');
     } else {
