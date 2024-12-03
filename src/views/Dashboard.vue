@@ -1,8 +1,9 @@
 <script setup>
+import createDream from '@/components/createDream.vue';
+// import DreamFeed from '@/components/DreamFeed.vue';
 import { useLayout } from '@/layout/composables/layout';
 import { ProductService } from '@/service/ProductService';
 import { onMounted, ref, watch } from 'vue';
-
 const { getPrimary, getSurface, isDarkTheme } = useLayout();
 
 const products = ref(null);
@@ -166,7 +167,7 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
         <div class="col-span-12 xl:col-span-6">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Recent Sales</div>
-                <DataTable :value="products" :rows="5" :paginator="true" responsiveLayout="scroll">
+                <!-- <DataTable :value="products" :rows="5" :paginator="true" responsiveLayout="scroll">
                     <Column style="width: 15%" header="Image">
                         <template #body="slotProps">
                             <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" width="50" class="shadow" />
@@ -183,7 +184,9 @@ watch([getPrimary, getSurface, isDarkTheme], () => {
                             <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
                         </template>
                     </Column>
-                </DataTable>
+                </DataTable> -->
+                <!-- <DreamFeed /> -->
+                <createDream />
             </div>
             <!-- <div class="card">
                 <div class="flex justify-between items-center mb-6">
